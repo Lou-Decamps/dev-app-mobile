@@ -214,7 +214,6 @@ export default function App() {
                 </div>
             )}
 
-            {/* Navigation */}
             <div className="tabs">
                 <button
                     type="button"
@@ -232,29 +231,21 @@ export default function App() {
                 </button>
             </div>
 
-            {/* Task View*/}
             {currentView === VIEWS.TASKS && (
                 <>
-                    {currentView === VIEWS.TASKS && (
-                        <>
-                            <SortFilterBar
-                                sortBy={sortBy}
-                                onSortChange={setSortBy}
-                                selectedStatuses={selectedStatuses}
-                                onToggleStatus={toggleStatusFilter}
-                                selectedFolderIds={selectedFolderIds}
-                                onToggleFolderFilter={toggleFolderFilter}
-                                folders={folders}
-                                activeFilter={activeFilter}
-                                onActiveFilterChange={setActiveFilter}
-                                FILTERS={FILTERS}
-                                SORT_OPTIONS={SORT_OPTIONS}
-                            />
-                            <main className="app__content">
-                                ...
-                            </main>
-                        </>
-                    )}
+                    <SortFilterBar
+                        sortBy={sortBy}
+                        onSortChange={setSortBy}
+                        selectedStatuses={selectedStatuses}
+                        onToggleStatus={toggleStatusFilter}
+                        selectedFolderIds={selectedFolderIds}
+                        onToggleFolderFilter={toggleFolderFilter}
+                        folders={folders}
+                        activeFilter={activeFilter}
+                        onActiveFilterChange={setActiveFilter}
+                        FILTERS={FILTERS}
+                        SORT_OPTIONS={SORT_OPTIONS}
+                    />
                     <main className="app__content">
                         <ul className="task__list">
                             {displayedTasks.length === 0 ? (
@@ -270,6 +261,7 @@ export default function App() {
                                         folders={folders}
                                         onAddFolder={(task) => {
                                             setSelectedTask(task);
+                                            setIsFolderSelectMode(true);
                                             setIsFolderModalOpen(true);
                                         }}
                                     />
@@ -280,7 +272,6 @@ export default function App() {
                 </>
             )}
 
-            {/* Folder view */}
             {currentView === VIEWS.FOLDERS && (
                 <main className="app__content">
                     <FolderList
@@ -291,6 +282,7 @@ export default function App() {
                         }}
                         onFolderEdit={(folder) => {
                             setSelectedFolder(folder);
+                            setIsFolderSelectMode(false);
                             setIsFolderModalOpen(true);
                         }}
                     />
@@ -321,20 +313,34 @@ export default function App() {
                     taskToEdit={selectedTask}
                 />
             )}
+
             {isFolderModalOpen && (
                 <FolderModal
-                    onClose={() => { setIsFolderModalOpen(false); setSelectedFolder(null); }}
+                    onClose={() => {
+                        setIsFolderModalOpen(false);
+                        setSelectedFolder(null);
+                        setIsFolderSelectMode(false);
+                    }}
                     onAdd={addFolder}
                     onUpdate={updateFolder}
                     onDelete={deleteFolder}
-                    folderToEdit={selectedFolder}
+                    folderToEdit={isFolderSelectMode ? null : selectedFolder}
+                    selectMode={isFolderSelectMode}
+                    folders={folders}
+                    onSelectFolder={(folder) => {
+                        if (selectedTask) addFolderToTask(selectedTask, folder);
+                    }}
                 />
             )}
 
             <Footer
                 currentView={currentView}
                 onAddTask={() => { setSelectedTask(null); setIsModalOpen(true); }}
-                onAddFolder={() => { setSelectedFolder(null); setIsFolderModalOpen(true); }}
+                onAddFolder={() => {
+                    setSelectedFolder(null);
+                    setIsFolderSelectMode(false);
+                    setIsFolderModalOpen(true);
+                }}
             />
         </div>
     );
