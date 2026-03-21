@@ -30,7 +30,7 @@ export default function FolderList({ folders, onFolderClick, onFolderEdit }) {
                             onFolderEdit(folder);
                         }}
                     >
-                        ✎
+                        Modifier
                     </button>
                 </li>
             ))}

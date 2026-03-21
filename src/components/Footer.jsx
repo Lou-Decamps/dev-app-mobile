@@ -1,11 +1,9 @@
 export default function Footer({ onAddTask, onAddFolder, currentView }) {
     return (
         <footer className="footer">
-            <p className="footer__text">© 2026 TodoList</p>
-            <p className="footer__text">Fait avec un pc et beaucoup de patience</p>
+
             <div className="footer__actions">
 
-                {/* Bouton tâche — seulement sur la vue tâches */}
                 {currentView === "tasks" && (
                     <button
                         type="button"
@@ -16,7 +14,6 @@ export default function Footer({ onAddTask, onAddFolder, currentView }) {
                     </button>
                 )}
 
-                {/* Bouton dossier — masqué sur la page de détail */}
                 {currentView !== "folder-detail" && (
                     <button
                         type="button"
@@ -28,6 +25,8 @@ export default function Footer({ onAddTask, onAddFolder, currentView }) {
                 )}
 
             </div>
+            <p className="footer__text">© 2026 TodoList</p>
+            <p className="footer__text">Fait avec un pc et beaucoup de patience</p>
         </footer>
     );
 }

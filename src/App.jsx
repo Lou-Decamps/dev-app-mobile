@@ -5,6 +5,7 @@ import Modal from "./components/Modal";
 import FolderModal from "./components/FolderModal";
 import FolderList from "./components/FolderList";
 import FolderDetail from "./components/FolderDetail";
+import TaskCard from "./components/TaskCard";
 import { COMPLETED_STATUS } from "./constants/taskStatus";
 import { loadFromBackup } from "./data/loadBackup";
 
@@ -19,7 +20,7 @@ const FILTERS = { ACTIVE: "active", ALL: "all" };
 const VIEWS = {
     TASKS: "tasks",
     FOLDERS: "folders",
-    FOLDER_DETAIL: "folder-detail",   // ← nouveau
+    FOLDER_DETAIL: "folder-detail",
 };
 
 function getInitialTasks() {
@@ -44,7 +45,24 @@ export default function App() {
     const [selectedFolder, setSelectedFolder] = useState(null);
     const [showRestoreBanner, setShowRestoreBanner] = useState(false);
     const [activeFilter, setActiveFilter] = useState(FILTERS.ACTIVE);
+    const [expandedTaskId, setExpandedTaskId] = useState(null);
+    const [isFolderSelectMode, setIsFolderSelectMode] = useState(false);
 
+    function toggleTask(id) {
+        setExpandedTaskId(expandedTaskId === id ? null : id);
+    }
+
+    function addFolderToTask(task, folder) {
+        const alreadyLinked = task.folders && task.folders.some((f) => f.id === folder.id);
+        if (alreadyLinked) {
+            alert("Ce dossier est déjà lié à cette tâche !");
+            return;
+        }
+        updateTask({
+            ...task,
+            folders: [...(task.folders || []), folder],
+        });
+    }
 
     useEffect(() => {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -184,17 +202,18 @@ export default function App() {
                                 <li className="task__empty">Aucune tâche non terminée 🎉</li>
                             ) : (
                                 displayedTasks.map((t) => (
-                                    <li
+                                    <TaskCard
                                         key={t.id}
-                                        className="task task--clickable"
-                                        onClick={() => {
-                                            setSelectedTask(t);
-                                            setIsModalOpen(true);
+                                        task={t}
+                                        isExpanded={expandedTaskId === t.id}
+                                        onToggle={() => toggleTask(t.id)}
+                                        onUpdate={updateTask}
+                                        folders={folders}
+                                        onAddFolder={(task) => {
+                                            setSelectedTask(task);
+                                            setIsFolderModalOpen(true);
                                         }}
-                                    >
-                                        <span className="task__title">{t.title}</span>
-                                        <span className="task__status">{t.status}</span>
-                                    </li>
+                                    />
                                 ))
                             )}
                         </ul>
@@ -219,7 +238,6 @@ export default function App() {
                 </main>
             )}
 
-            {/* Vue détail d'un dossier */}
             {currentView === VIEWS.FOLDER_DETAIL && selectedFolder && (
                 <FolderDetail
                     folder={selectedFolder}
@@ -235,7 +253,6 @@ export default function App() {
                 />
             )}
 
-            {/* Modals */}
             {isModalOpen && (
                 <Modal
                     onClose={() => { setIsModalOpen(false); setSelectedTask(null); }}
