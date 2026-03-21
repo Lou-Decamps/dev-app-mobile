@@ -43,32 +43,102 @@
 .header__separator { color: #ccc; }
 
 /* ── Footer ── */
+/* ── Footer ── */
 .footer {
     padding: 1rem;
     text-align: center;
     border-top: 2px solid #e0e0e0;
     background-color: #f5f5f5;
-    position: relative;
 }
 
-.footer__text { margin: 0.2rem 0; color: #666; font-size: 0.85rem; }
+.footer__text {
+    margin: 0.2rem 0;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.footer__actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
 
 .footer__button-add {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
     border: none;
     background-color: #007bff;
     color: white;
-    font-size: 1.5rem;
+    font-size: 0.95rem;
     cursor: pointer;
 }
 
 .footer__button-add:hover { background-color: #0056b3; }
+
+.footer__button-add--folder { background-color: #6c757d; }
+.footer__button-add--folder:hover { background-color: #495057; }
+
+/* ── Folder detail ── */
+.folder-detail__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.folder-detail__back {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.folder-detail__back:hover {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.folder-detail__title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.folder-detail__title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.folder-detail__count {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+/* ── Folder edit button ── */
+.folder__edit-btn {
+    margin-left: auto;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.folder__edit-btn:hover {
+    border-color: #007bff;
+    color: #007bff;
+}
 
 /* ── Task list ── */
 .task__list { list-style: none; padding: 0; margin: 0; }
@@ -227,3 +297,135 @@
 .restore-banner__btn--no:hover {
     background-color: #c7c7c7;
 }
+
+/* ── Tabs ── */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 0 1rem;
+    margin-top: 0.5rem;
+}
+
+.tabs__tab {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #666;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+}
+
+.tabs__tab:hover { color: #007bff; }
+
+.tabs__tab--active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+    font-weight: 500;
+}
+
+/* ── Folders ── */
+.folder__list { list-style: none; padding: 0; margin: 0; }
+
+.folder {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+.folder--clickable { cursor: pointer; }
+.folder--clickable:hover {
+    background-color: #f0f7ff;
+    border-color: #007bff;
+}
+
+.folder__color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.folder__title { font-weight: bold; }
+
+/* ── Color picker ── */
+.color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.color-picker__swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.color-picker__swatch:hover { transform: scale(1.15); }
+
+.color-picker__swatch--selected {
+    border-color: #333;
+    transform: scale(1.15);
+}
+
+/* Couleurs des swatches */
+.color-picker__swatch--red    { background-color: #e74c3c; }
+.color-picker__swatch--orange { background-color: #e67e22; }
+.color-picker__swatch--yellow { background-color: #f1c40f; }
+.color-picker__swatch--green  { background-color: #2ecc71; }
+.color-picker__swatch--blue   { background-color: #3498db; }
+.color-picker__swatch--purple { background-color: #9b59b6; }
+.color-picker__swatch--pink   { background-color: #e91e8c; }
+.color-picker__swatch--teal   { background-color: #1abc9c; }
+.color-picker__swatch--gray   { background-color: #95a5a6; }
+.color-picker__swatch--brown  { background-color: #8d6e63; }
+
+/* Variables CSS pour les dots dans la liste */
+:root {
+    --folder-color-red:    #e74c3c;
+    --folder-color-orange: #e67e22;
+    --folder-color-yellow: #f1c40f;
+    --folder-color-green:  #2ecc71;
+    --folder-color-blue:   #3498db;
+    --folder-color-purple: #9b59b6;
+    --folder-color-pink:   #e91e8c;
+    --folder-color-teal:   #1abc9c;
+    --folder-color-gray:   #95a5a6;
+    --folder-color-brown:  #8d6e63;
+}
+
+/* ── Footer actions ── */
+.footer__actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.footer__button-add {
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.footer__button-add:hover { background-color: #0056b3; }
+
+.footer__button-add--folder {
+    background-color: #6c757d;
+}
+
+.footer__button-add--folder:hover { background-color: #495057; }

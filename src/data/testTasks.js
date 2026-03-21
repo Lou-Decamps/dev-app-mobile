@@ -1,6 +1,6 @@
 import { TaskStatus } from "../constants/taskStatus";
 
-export const TACHES_DE_TEST = [
+export const TEST_TASKS = [
     {
         id: 1,
         title: "Manger",
