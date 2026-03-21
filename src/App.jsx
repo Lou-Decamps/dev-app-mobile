@@ -6,6 +6,7 @@ import FolderModal from "./components/FolderModal";
 import FolderList from "./components/FolderList";
 import FolderDetail from "./components/FolderDetail";
 import TaskCard from "./components/TaskCard";
+import SortFilterBar from "./components/SortFilterBar";
 import { COMPLETED_STATUS } from "./constants/taskStatus";
 import { loadFromBackup } from "./data/loadBackup";
 
@@ -21,6 +22,12 @@ const VIEWS = {
     TASKS: "tasks",
     FOLDERS: "folders",
     FOLDER_DETAIL: "folder-detail",
+};
+
+const SORT_OPTIONS = {
+    DUE_DATE:      "dueDate",
+    CREATION_DATE: "creationDate",
+    NAME:          "name",
 };
 
 function getInitialTasks() {
@@ -47,6 +54,9 @@ export default function App() {
     const [activeFilter, setActiveFilter] = useState(FILTERS.ACTIVE);
     const [expandedTaskId, setExpandedTaskId] = useState(null);
     const [isFolderSelectMode, setIsFolderSelectMode] = useState(false);
+    const [sortBy, setSortBy] = useState(SORT_OPTIONS.DUE_DATE);
+    const [selectedStatuses, setSelectedStatuses] = useState([]);
+    const [selectedFolderIds, setSelectedFolderIds] = useState([]);
 
     function toggleTask(id) {
         setExpandedTaskId(expandedTaskId === id ? null : id);
@@ -109,6 +119,7 @@ export default function App() {
     function updateTask(updatedTask) {
         setTasks(tasks.map((t) => t.id === updatedTask.id ? updatedTask : t));
     }
+
     function deleteTask(id) {
         const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?");
         if (!confirmed) return false;
@@ -120,6 +131,7 @@ export default function App() {
     function updateFolder(updatedFolder) {
         setFolders(folders.map((f) => f.id === updatedFolder.id ? updatedFolder : f));
     }
+
     function deleteFolder(id) {
         const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce dossier ?");
         if (!confirmed) return false;
@@ -127,13 +139,56 @@ export default function App() {
         return true;
     }
 
+    function toggleStatusFilter(status) {
+        if (status === "__clear__") {
+            setSelectedStatuses([]);
+            return;
+        }
+        setSelectedStatuses((prev) =>
+            prev.includes(status)
+                ? prev.filter((s) => s !== status)
+                : [...prev, status]
+        );
+    }
+
+    function toggleFolderFilter(folderId) {
+        setSelectedFolderIds((prev) =>
+            prev.includes(folderId)
+                ? prev.filter((id) => id !== folderId)
+                : [...prev, folderId]
+        );
+    }
+
     const totalTasks = tasks.length;
     const incompleteTasks = tasks.filter(
         (t) => !COMPLETED_STATUS.includes(t.status)
     ).length;
-    const displayedTasks = activeFilter === FILTERS.ALL
-        ? tasks
-        : tasks.filter((t) => !COMPLETED_STATUS.includes(t.status));
+
+    const displayedTasks = (() => {
+        let result = [...tasks];
+
+        if (selectedStatuses.length > 0) {
+            result = result.filter((t) => selectedStatuses.includes(t.status));
+        } else if (activeFilter === FILTERS.ACTIVE) {
+            result = result.filter((t) => !COMPLETED_STATUS.includes(t.status));
+        }
+        if (selectedFolderIds.length > 0) {
+            result = result.filter((t) =>
+                t.folders && t.folders.some((f) => selectedFolderIds.includes(f.id))
+            );
+        }
+        result.sort((a, b) => {
+            if (sortBy === SORT_OPTIONS.NAME) {
+                return a.title.localeCompare(b.title);
+            }
+            if (sortBy === SORT_OPTIONS.CREATION_DATE) {
+                return new Date(a.creationDate) - new Date(b.creationDate);
+            }
+            return new Date(a.dueDate) - new Date(b.dueDate);
+        });
+
+        return result;
+    })();
 
     return (
         <div className="app">
@@ -180,22 +235,26 @@ export default function App() {
             {/* Task View*/}
             {currentView === VIEWS.TASKS && (
                 <>
-                    <div className="filter-bar">
-                        <button
-                            type="button"
-                            className={`filter-bar__btn ${activeFilter === FILTERS.ACTIVE ? "filter-bar__btn--active" : ""}`}
-                            onClick={() => setActiveFilter(FILTERS.ACTIVE)}
-                        >
-                            En cours ({incompleteTasks})
-                        </button>
-                        <button
-                            type="button"
-                            className={`filter-bar__btn ${activeFilter === FILTERS.ALL ? "filter-bar__btn--active" : ""}`}
-                            onClick={() => setActiveFilter(FILTERS.ALL)}
-                        >
-                            Tout voir ({totalTasks})
-                        </button>
-                    </div>
+                    {currentView === VIEWS.TASKS && (
+                        <>
+                            <SortFilterBar
+                                sortBy={sortBy}
+                                onSortChange={setSortBy}
+                                selectedStatuses={selectedStatuses}
+                                onToggleStatus={toggleStatusFilter}
+                                selectedFolderIds={selectedFolderIds}
+                                onToggleFolderFilter={toggleFolderFilter}
+                                folders={folders}
+                                activeFilter={activeFilter}
+                                onActiveFilterChange={setActiveFilter}
+                                FILTERS={FILTERS}
+                                SORT_OPTIONS={SORT_OPTIONS}
+                            />
+                            <main className="app__content">
+                                ...
+                            </main>
+                        </>
+                    )}
                     <main className="app__content">
                         <ul className="task__list">
                             {displayedTasks.length === 0 ? (
