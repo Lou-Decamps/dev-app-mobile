@@ -18,11 +18,11 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
 
     function handleSubmit() {
         if (title.trim().length < 5) {
-            alert("Title must be at least 5 characters!");
+            alert("Le titre doit comporter au moins 5 caractères.!");
             return;
         }
         if (!dueDate) {
-            alert("Due date is required!");
+            alert("La date d'échéance est requise!");
             return;
         }
 
@@ -56,11 +56,11 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
             <div className="modal__content" onClick={(e) => e.stopPropagation()}>
 
                 <h2 className="modal__title">
-                    {isEditMode ? "Edit task" : "New task"}
+                    {isEditMode ? "Modifier la tâche" : "Nouvelle tâche"}
                 </h2>
 
                 <label className="modal__label">
-                    Titre (5 characters min) *
+                    Titre (5 caractères min) *
                     <input
                         type="text"
                         value={title}
@@ -115,7 +115,7 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
                                 if (deleted) onClose();
                             }}
                         >
-                            Delete
+                            Supprimer
                         </button>
                     )}
 
@@ -127,14 +127,14 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
                         className="modal__button modal__button--cancel"
                         onClick={onClose}
                     >
-                        Cancel
+                        Annuler
                     </button>
                     <button
                         type="button"
                         className="modal__button modal__button--create"
                         onClick={handleSubmit}
                     >
-                        {isEditMode ? "Save" : "Create"}
+                        {isEditMode ? "Sauvegarder" : "Creer"}
                     </button>
 
                 </div>
