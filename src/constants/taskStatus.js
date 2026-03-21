@@ -1,8 +1,8 @@
 export const TaskStatus = {
-    TO_DO: "À faire",
-    IN_PROGRESS: "En cours",
+    TO_DO: "Nouveau",
+    IN_PROGRESS: "En attente",
     PAUSED: "En pause",
-    FINISHED: "Terminé",
+    FINISHED: "Réussi",
     ABANDONED: "Abandonné",
 };
 

@@ -65,7 +65,7 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Ex: Buy groceries"
+                        placeholder="Ex: Faire les courses"
                         className="modal__input"
                     />
                 </label>
@@ -75,7 +75,7 @@ export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Optional details..."
+                        placeholder="Détails facultatifs..."
                         className="modal__input modal__textarea"
                     />
                 </label>

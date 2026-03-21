@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import { COMPLETED_STATUS } from "./constants/taskStatus";
+import { loadFromBackup } from "./data/loadBackup";
 import "./App.css";
 
+const STORAGE_KEY = "todoapp_tasks";
+
+function getInitialTasks() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+        const parsed = JSON.parse(saved);
+        return parsed.map((t) => ({
+            ...t,
+            creationDate: new Date(t.creationDate),
+            dueDate: new Date(t.dueDate),
+        }));
+    }
+
+    const { tasks } = loadFromBackup();
+    return tasks;
+}
+
 export default function App() {
-    const [task, setTask] = useState([]);
+    const [task, setTask] = useState(getInitialTasks);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(task));
+    }, [task]);
 
     const totalTask = task.length;
     const unfinishedTask = task.filter(
@@ -30,6 +53,14 @@ export default function App() {
 
     function addTask(newTask) {
         setTask([...task, newTask]);
+    }
+
+    function resetToBackup() {
+        const confirmed = window.confirm("Êtes-vous sûr(e) ? Toutes vos modifications seront perdues.");
+        if (!confirmed) return;
+        localStorage.removeItem(STORAGE_KEY);
+        const { tasks: backupTasks } = loadFromBackup();
+        setTask(backupTasks);
     }
 
     return (

@@ -20,6 +20,22 @@
     border-bottom: 2px solid #e0e0e0;
 }
 
+.header__reset {
+    margin-top: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #999;
+    cursor: pointer;
+}
+
+.header__reset:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
 .header__title { margin: 0; }
 .header__subtitle { margin: 0.25rem 0; color: #666; }
 .header__stats { margin-top: 0.75rem; display: flex; gap: 0.5rem; justify-content: center; }
