@@ -176,3 +176,54 @@
 .modal__button--cancel:hover { background-color: #c7c7c7; }
 .modal__button--create { background-color: #007bff; color: white; }
 .modal__button--create:hover { background-color: #0056b3; }
+
+/* ── Restore banner ── */
+.restore-banner {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #b8d4f8;
+    border-radius: 8px;
+    background-color: #eaf3ff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.restore-banner__text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #1a5fa8;
+}
+
+.restore-banner__actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.restore-banner__btn {
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.restore-banner__btn--yes {
+    background-color: #007bff;
+    color: white;
+}
+
+.restore-banner__btn--yes:hover {
+    background-color: #0056b3;
+}
+
+.restore-banner__btn--no {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.restore-banner__btn--no:hover {
+    background-color: #c7c7c7;
+}
