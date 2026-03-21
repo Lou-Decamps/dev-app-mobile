@@ -69,6 +69,15 @@
     border-radius: 6px;
 }
 
+.task--clickable {
+    cursor: pointer;
+}
+
+.task--clickable:hover {
+    background-color: #f0f7ff;
+    border-color: #007bff;
+}
+
 .task__title { font-weight: bold; }
 .task__status { color: #666; font-size: 0.9rem; }
 
@@ -129,6 +138,21 @@
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
+}
+
+.modal__button--delete {
+    background-color: #fff0f0;
+    color: #c0392b;
+    border: 1px solid #f5c6c6;
+}
+
+.modal__button--delete:hover {
+    background-color: #c0392b;
+    color: white;
+}
+
+.modal__actions-spacer {
+    flex: 1;
 }
 
 

@@ -8,11 +8,25 @@ import "./App.css";
 export default function App() {
     const [task, setTask] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
 
     const totalTask = task.length;
     const unfinishedTask = task.filter(
         (t) => !COMPLETED_STATUS.includes(t.statut)
     ).length;
+
+    function updateTask(updatedTask) {
+        setTask(task.map(
+            (t) => t.id === updatedTask.id ? updatedTask : t
+        ));
+    }
+
+    function deleteTask(id) {
+        const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche?");
+        if (!confirmed) return false;
+        setTask(task.filter((t) => t.id !== id));
+        return true;
+    }
 
     function addTask(newTask) {
         setTask([...task, newTask]);
@@ -32,10 +46,17 @@ export default function App() {
                             Aucune tâche pour l'instant. Clique sur + pour commencer !
                         </li>
                     ) : (
-                        task.map((task) => (
-                            <li key={task.id} className="task">
-                                <span className="task__title">{task.title}</span>
-                                <span className="task__status">{task.status}</span>
+                        task.map((t) => (
+                            <li
+                                key={t.id}
+                                className="task task--clickable"
+                                onClick={() => {
+                                    setSelectedTask(t);
+                                    setIsModalOpen(true);
+                                }}
+                            >
+                                <span className="task__title">{t.title}</span>
+                                <span className="task__status">{t.status}</span>
                             </li>
                         ))
                     )}
@@ -44,11 +65,20 @@ export default function App() {
 
             {isModalOpen && (
                 <Modal
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() => {
+                        setIsModalOpen(false);
+                        setSelectedTask(null);
+                    }}
                     onAdd={addTask}
+                    onUpdate={updateTask}
+                    onDelete={deleteTask}
+                    taskToEdit={selectedTask}
                 />
             )}
-            <Footer onAddTask={() => setIsModalOpen(true)} />
+            <Footer onAddTask={() => {
+                setSelectedTask(null);
+                setIsModalOpen(true);
+            }} />
         </div>
     );
 }
