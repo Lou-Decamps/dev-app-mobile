@@ -1,4 +1,4 @@
-export default function Footer({ onAjouterTache }) {
+export default function Footer({ onAddTask }) {
     return (
         <footer className="footer">
             <p className="footer__texte">© 2026 TodoList</p>
@@ -6,7 +6,7 @@ export default function Footer({ onAjouterTache }) {
             <button
                 type="button"
                 className="footer__button-to-add"
-                onClick={onAjouterTache}
+                onClick={onAddTask}
             >
                 +
             </button>

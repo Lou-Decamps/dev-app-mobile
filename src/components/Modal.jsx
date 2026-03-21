@@ -5,7 +5,7 @@ export default function Modal({ onClose, onAdd }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
-    const [statut, setStatut] = useState(TaskStatus.TO_DO);
+    const [status, setStatus] = useState(TaskStatus.TO_DO);
 
     function handleSubmit() {
         if (title.trim().length < 5) {
@@ -17,17 +17,17 @@ export default function Modal({ onClose, onAdd }) {
             return;
         }
 
-        const nouvelleTache = {
+        const newTask = {
             id: Date.now(),
-            titre: title.trim(),
+            title: title.trim(),
             description: description.trim(),
-            dateCreation: new Date(),
-            dateEcheance: new Date(dueDate),
-            statut,
-            dossiers: [],
+            creationDate: new Date(),
+            dueDate: new Date(dueDate),
+            status,
+            folder: [],
         };
 
-        onAdd(nouvelleTache);
+        onAdd(newTask);
         onClose();
     }
 
@@ -71,8 +71,8 @@ export default function Modal({ onClose, onAdd }) {
                 <label className="modal__label">
                     Statut
                     <select
-                        value={statut}
-                        onChange={(e) => setStatut(e.target.value)}
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
                         className="modal__input modal__select"
                     >
                         {Object.values(TaskStatus).map((etat) => (

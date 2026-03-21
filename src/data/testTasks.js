@@ -7,8 +7,8 @@ export const TACHES_DE_TEST = [
         description: "",
         creationDate: new Date("2026-03-01"),
         duDate: new Date("2026-03-22"),
-        statut: TaskStatus.FINISHED,
-        file: [],
+        status: TaskStatus.FINISHED,
+        folder: [],
     },
     {
         id: 2,
@@ -16,8 +16,8 @@ export const TACHES_DE_TEST = [
         description: "8 heures minimum",
         creationDate: new Date("2026-03-01"),
         duDate: new Date("2026-03-23"),
-        statut: TaskStatus.IN_PROGRESS,
-        file: [],
+        status: TaskStatus.IN_PROGRESS,
+        folder: [],
     },
     {
         id: 3,
@@ -25,7 +25,7 @@ export const TACHES_DE_TEST = [
         description: "",
         creationDate: new Date("2026-03-01"),
         duDate: new Date("2026-03-25"),
-        statut: TaskStatus.TO_DO,
-        file: [],
+        status: TaskStatus.TO_DO,
+        folder: [],
     },
 ];

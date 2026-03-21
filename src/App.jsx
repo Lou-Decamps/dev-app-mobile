@@ -7,7 +7,7 @@ import "./App.css";
 
 export default function App() {
     const [task, setTask] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const totalTask = task.length;
     const unfinishedTask = task.filter(
@@ -21,8 +21,8 @@ export default function App() {
     return (
         <div className="app">
             <Header
-                totaltask={totalTask}
-                tachesNonFinies={unfinishedTask}
+                totalTask={totalTask}
+                unfinishedTask={unfinishedTask}
             />
 
             <main className="app__content">
@@ -42,14 +42,13 @@ export default function App() {
                 </ul>
             </main>
 
-            {modalOpen && (
+            {isModalOpen && (
                 <Modal
-                    onClose={() => setModalOpen(false)}
+                    onClose={() => setIsModalOpen(false)}
                     onAdd={addTask}
                 />
             )}
-
-            <Footer onAddTask={() => setModalOpen(true)} />
+            <Footer onAddTask={() => setIsModalOpen(true)} />
         </div>
     );
 }
