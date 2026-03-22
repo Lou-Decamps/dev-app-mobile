@@ -630,6 +630,87 @@
 
 .footer__button-add--folder:hover { border-color: var(--accent); color: var(--accent); }
 
+/* PIE CHART */
+.header__top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.header__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pie-chart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pie-chart__svg {
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.1));
+}
+
+.pie-chart__legend {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.pie-chart__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+}
+
+.pie-chart__legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.pie-chart__legend-label {
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.pie-chart__legend-count {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 16px;
+    text-align: right;
+}
+
+/* Sur mobile — camembert en dessous */
+@media (max-width: 480px) {
+    .header__top {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .pie-chart {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pie-chart__legend {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 1rem;
+    }
+}
+
 /* RESPONSIVE */
 
 /* ── Desktop : pleine largeur ── */

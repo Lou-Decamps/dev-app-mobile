@@ -196,6 +196,7 @@ export default function App() {
                 totalTasks={totalTasks}
                 incompleteTasks={incompleteTasks}
                 onReset={resetToBackup}
+                tasks={tasks}
             />
 
             {showRestoreBanner && (
