@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FOLDER_COLORS } from "../constants/folderColors";
+import { FOLDER_ICONS } from "../constants/folderIcons";
 
 export default function FolderModal({
                                         onClose, onAdd, onUpdate, onDelete,
@@ -8,9 +9,12 @@ export default function FolderModal({
                                         folders,
                                         onSelectFolder,
                                     }) {
+
     const isEditMode = !selectMode && folderToEdit != null;
+    const [icon, setIcon] = useState(isEditMode ? folderToEdit.icon || "" : "");
 
     const [name, setName] = useState(isEditMode ? folderToEdit.title : "");
+    const [description, setDescription] = useState(isEditMode ? folderToEdit.description : "");
     const [color, setColor] = useState(
         isEditMode ? folderToEdit.color : FOLDER_COLORS.BLUE.value
     );
@@ -19,11 +23,10 @@ export default function FolderModal({
         if (name.trim().length < 3) {
             alert("Le nom doit faire au moins 3 caractères !");
             return;
-        }
-        if (isEditMode) {
-            onUpdate({ ...folderToEdit, title: name.trim(), color });
+        } if (isEditMode) {
+            onUpdate({ ...folderToEdit, title: name.trim(), color, icon });
         } else {
-            onAdd({ id: Date.now(), title: name.trim(), description: "", color });
+            onAdd({ id: Date.now(), title: name.trim(), description: description.trim(), color, icon });
         }
         onClose();
     }
@@ -87,6 +90,17 @@ export default function FolderModal({
                 </label>
 
                 <label className="modal__label">
+                    Description
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Ex: Marketing"
+                        className="modal__input"
+                    />
+                </label>
+
+                <label className="modal__label">
                     Couleur
                     <div className="color-picker">
                         {Object.values(FOLDER_COLORS).map((c) => (
@@ -97,6 +111,32 @@ export default function FolderModal({
                                 className={`color-picker__swatch color-picker__swatch--${c.value} ${color === c.value ? "color-picker__swatch--selected" : ""}`}
                                 onClick={() => setColor(c.value)}
                             />
+                        ))}
+                    </div>
+                </label>
+
+                <label className="modal__label">
+                    Pictogramme
+                    <div className="icon-picker">
+                        <button
+                            type="button"
+                            className={`icon-picker__btn ${icon === "" ? "icon-picker__btn--selected" : ""}`}
+                            onClick={() => setIcon("")}
+                            title="Aucun"
+                        >
+                            —
+                        </button>
+
+                        {FOLDER_ICONS.map((ic) => (
+                            <button
+                                key={ic.value}
+                                type="button"
+                                className={`icon-picker__btn ${icon === ic.value ? "icon-picker__btn--selected" : ""}`}
+                                onClick={() => setIcon(ic.value)}
+                                title={ic.label}
+                            >
+                                {ic.value}
+                            </button>
                         ))}
                     </div>
                 </label>

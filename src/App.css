@@ -344,6 +344,56 @@
 .task__action-btn--save:hover { background-color: var(--accent-dark); }
 .task__action-btn--cancel:hover { border-color: var(--danger); color: var(--danger); }
 
+/* ── Icon picker ── */
+.icon-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.3rem;
+}
+
+.icon-picker__btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: none;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.12s;
+    cursor: pointer;
+}
+
+.icon-picker__btn:hover {
+    border-color: var(--accent);
+    background-color: var(--accent-light);
+}
+
+.icon-picker__btn--selected {
+    border-color: var(--accent);
+    background-color: var(--accent-light);
+    font-weight: bold;
+}
+
+/* Folder icon */
+.folder__icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.folder-detail__icon {
+    font-size: 1.4rem;
+}
+
+.folder-detail__description {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0;
+    font-style: italic;
+}
+
 /* TASK INLINE EDIT */
 .task__edit-form { display: flex; flex-direction: column; gap: 0.65rem; }
 

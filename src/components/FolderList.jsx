@@ -13,22 +13,20 @@ export default function FolderList({ folders, onFolderClick, onFolderEdit }) {
                 <li
                     key={folder.id}
                     className="folder folder--clickable"
-                    onClick={() => onFolderClick(folder)}   // clic → page dédiée
+                    onClick={() => onFolderClick(folder)}
                 >
+                    {folder.icon && (
+                        <span className="folder__icon">{folder.icon}</span>
+                    )}
                     <div
                         className="folder__color-dot"
                         style={{ backgroundColor: `var(--folder-color-${folder.color})` }}
                     />
                     <span className="folder__title">{folder.title}</span>
-
-                    {}
                     <button
                         type="button"
                         className="folder__edit-btn"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onFolderEdit(folder);
-                        }}
+                        onClick={(e) => { e.stopPropagation(); onFolderEdit(folder); }}
                     >
                         Modifier
                     </button>

@@ -1,0 +1,17 @@
+export const FOLDER_ICONS = [
+    { value: "📁", label: "Dossier" },
+    { value: "⭐", label: "Favori" },
+    { value: "🏠", label: "Maison" },
+    { value: "💼", label: "Travail" },
+    { value: "📚", label: "Études" },
+    { value: "🎯", label: "Objectif" },
+    { value: "💡", label: "Idée" },
+    { value: "🛒", label: "Courses" },
+    { value: "🏋️", label: "Sport" },
+    { value: "🎨", label: "Créatif" },
+    { value: "💻", label: "Tech" },
+    { value: "🌱", label: "Projet" },
+    { value: "❤️", label: "Personnel" },
+    { value: "🔧", label: "Maintenance" },
+    { value: "📊", label: "Finance" },
+];

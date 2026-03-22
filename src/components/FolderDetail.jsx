@@ -1,5 +1,3 @@
-
-
 export default function FolderDetail({ folder, tasks, onBack, onTaskClick }) {
     const folderTasks = tasks.filter((t) =>
         t.folders && t.folders.some((f) => f.id === folder.id)
@@ -7,8 +5,6 @@ export default function FolderDetail({ folder, tasks, onBack, onTaskClick }) {
 
     return (
         <main className="app__content">
-
-            {}
             <div className="folder-detail__header">
                 <button
                     type="button"
@@ -18,22 +14,27 @@ export default function FolderDetail({ folder, tasks, onBack, onTaskClick }) {
                     ← Retour
                 </button>
                 <div className="folder-detail__title-row">
+                    {folder.icon && (
+                        <span className="folder-detail__icon">{folder.icon}</span>
+                    )}
                     <div
                         className="folder__color-dot"
                         style={{ backgroundColor: `var(--folder-color-${folder.color})` }}
                     />
                     <h2 className="folder-detail__title">{folder.title}</h2>
                 </div>
+
+                {folder.description && (
+                    <p className="folder-detail__description">{folder.description}</p>
+                )}
+
                 <span className="folder-detail__count">
                     {folderTasks.length} tâche(s)
                 </span>
             </div>
 
-            {}
             {folderTasks.length === 0 ? (
-                <p className="task__empty">
-                    Aucune tâche dans ce dossier.
-                </p>
+                <p className="task__empty">Aucune tâche dans ce dossier.</p>
             ) : (
                 <ul className="task__list">
                     {folderTasks.map((t) => (
@@ -48,7 +49,6 @@ export default function FolderDetail({ folder, tasks, onBack, onTaskClick }) {
                     ))}
                 </ul>
             )}
-
         </main>
     );
 }
