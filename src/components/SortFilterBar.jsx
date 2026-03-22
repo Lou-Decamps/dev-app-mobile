@@ -104,16 +104,13 @@ export default function SortFilterBar({
                                 type="button"
                                 className={`sort-filter-bar__btn ${
                                     selectedFolderIds.includes(f.id)
-                                        ? "sort-filter-bar__btn--active"
+                                        ? "sort-filter-bar__btn--active sort-filter-bar__btn--folder-active"
                                         : ""
                                 }`}
                                 style={
                                     selectedFolderIds.includes(f.id)
-                                        ? {
-                                            borderColor: `var(--folder-color-${f.color})`,
-                                            backgroundColor: `var(--folder-color-${f.color})`,
-                                            color: "white",
-                                        }
+                                        ? { borderColor: `var(--folder-color-${f.color})`,
+                                            backgroundColor: `var(--folder-color-${f.color})` }
                                         : { borderColor: `var(--folder-color-${f.color})` }
                                 }
                                 onClick={() => onToggleFolderFilter(f.id)}

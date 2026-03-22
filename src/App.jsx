@@ -17,7 +17,6 @@ const STORAGE_KEY_FOLDERS = "todoapp_folders";
 
 const FILTERS = { ACTIVE: "active", ALL: "all" };
 
-
 const VIEWS = {
     TASKS: "tasks",
     FOLDERS: "folders",
@@ -63,6 +62,7 @@ export default function App() {
     const [sortBy, setSortBy] = useState(SORT_OPTIONS.DUE_DATE);
     const [selectedStatuses, setSelectedStatuses] = useState([]);
     const [selectedFolderIds, setSelectedFolderIds] = useState([]);
+    const [isDark, setIsDark] = useState(false);
 
     function toggleTask(id) {
         setExpandedTaskId(expandedTaskId === id ? null : id);
@@ -165,6 +165,10 @@ export default function App() {
         );
     }
 
+    function toggleDarkMode() {
+        setIsDark((prev )=>  !prev);
+    }
+
     const totalTasks = tasks.length;
     const incompleteTasks = tasks.filter(
         (t) => !COMPLETED_STATUS.includes(t.status)
@@ -197,14 +201,15 @@ export default function App() {
     })();
 
     return (
-        <div className="app">
+        <div className={`app ${isDark ? "dark" : ""}`}>
             <Header
                 totalTasks={totalTasks}
                 incompleteTasks={incompleteTasks}
                 onReset={resetToBackup}
                 tasks={tasks}
+                isDark={isDark}
+                onToggleDark={toggleDarkMode}
             />
-
             {showRestoreBanner && (
                 <div className="restore-banner">
                     <p className="restore-banner__text">

@@ -72,7 +72,7 @@ export default function PieChart({ tasks }) {
 
             <ul className="pie-chart__legend">
                 {slicesWithAngles.map((slice) => (
-                    <li key={slice.label} className="pie-chart__legend-item">
+                    <div key={slice.label} className="pie-chart__legend-item">
                         <span
                             className="pie-chart__legend-dot"
                             style={{ backgroundColor: slice.color }}
@@ -83,7 +83,7 @@ export default function PieChart({ tasks }) {
                         <span className="pie-chart__legend-count">
                             {slice.count}
                         </span>
-                    </li>
+                    </div>
                 ))}
             </ul>
         </div>
