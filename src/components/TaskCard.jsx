@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TaskStatus } from "../constants/taskStatus";
 
 export default function TaskCard({
                                      task,
@@ -19,6 +20,7 @@ export default function TaskCard({
 
     const firstTwoFolders = task.folders ? task.folders.slice(0, 2) : [];
     const extraFolders = task.folders ? task.folders.length - 2 : 0;
+    const [editStatus, setEditStatus] = useState(task.status);
 
     function formatDate(date) {
         if (!date) return "";
@@ -36,6 +38,7 @@ export default function TaskCard({
             title: editTitle.trim(),
             description: editDescription.trim(),
             dueDate: new Date(editDueDate),
+            status: editStatus,
         });
         setIsEditing(false);
     }
@@ -48,6 +51,7 @@ export default function TaskCard({
                 ? task.dueDate.toISOString().split("T")[0]
                 : task.dueDate
         );
+        setEditStatus(task.status);
         setIsEditing(false);
     }
 
@@ -105,12 +109,16 @@ export default function TaskCard({
                     {isEditing ? (
                         <div className="task__edit-form">
                             <label className="task__edit-label">
-                                Description
-                                <textarea
-                                    value={editDescription}
-                                    onChange={(e) => setEditDescription(e.target.value)}
-                                    className="task__edit-input task__edit-input--textarea"
-                                />
+                                Statut
+                                <select
+                                    value={editStatus}
+                                    onChange={(e) => setEditStatus(e.target.value)}
+                                    className="task__edit-input"
+                                >
+                                    {Object.values(TaskStatus).map((s) => (
+                                        <option key={s} value={s}>{s}</option>
+                                    ))}
+                                </select>
                             </label>
                             <label className="task__edit-label">
                                 Date d'échéance
