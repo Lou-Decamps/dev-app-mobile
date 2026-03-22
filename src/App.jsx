@@ -42,6 +42,12 @@ function getInitialFolders() {
     return folders;
 }
 
+function isNotExpired(task){
+    const today = new Date();
+    const oneWeekAgo = new Date(today.getTime() - (24*60*60*1000)*7);
+    return new Date (task.dueDate) > oneWeekAgo;
+}
+
 export default function App() {
     const [tasks, setTasks] = useState(getInitialTasks);
     const [folders, setFolders] = useState(getInitialFolders);
@@ -186,7 +192,7 @@ export default function App() {
             }
             return new Date(a.dueDate) - new Date(b.dueDate);
         });
-
+        result = result.filter(isNotExpired);
         return result;
     })();
 
