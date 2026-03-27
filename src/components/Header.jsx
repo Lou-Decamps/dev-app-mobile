@@ -1,5 +1,19 @@
+/**
+ * @fileoverview Application header component.
+ */
 import PieChart from "./PieChart";
 
+/**
+ * Header displaying the title, statistics, pie chart
+ * and global control buttons.
+ * @param {Object} props
+ * @param {number} props.totalTasks - Total number of tasks
+ * @param {number} props.incompleteTasks - Number of incomplete tasks
+ * @param {Function} props.onReset - Callback to reset from backup
+ * @param {Object[]} props.tasks - Task array (for the pie chart)
+ * @param {boolean} props.isDark - Current dark mode state
+ * @param {Function} props.onToggleDark - Callback to toggle dark mode
+ */
 export default function Header({ totalTasks, incompleteTasks, onReset, tasks, isDark, onToggleDark }) {
     return (
         <header className="header">

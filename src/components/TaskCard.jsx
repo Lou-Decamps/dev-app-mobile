@@ -1,6 +1,21 @@
+/**
+ * @fileoverview Task map with simple and full modes.
+ */
 import { useState } from "react";
 import { TaskStatus } from "../constants/taskStatus";
 
+/**
+ * Displays a task in simple mode (title, date, first 2 folders)
+ * or in full mode (all folders, description, inline editing)
+ * A single click on the triangle toggles between the two modes.
+ * @param {Object} props
+ * @param {Object} props.task - The task to display
+ * @param {boolean} props.isExpanded - If true, displays the full mode
+ * @param {Function} props.onToggle - Callback to toggle the mode
+ * @param {Function} props.onUpdate - Callback to save the changes
+ * @param {Object[]} props.folders - List of available folders
+ * @param {Function} props.onAddFolder - Callback to open the folder selection
+ */
 export default function TaskCard({
                                      task,
                                      isExpanded,

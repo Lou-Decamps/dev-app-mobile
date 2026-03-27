@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Root component of the ToDoList application.
+ * Manages all global state, handles view routing, and orchestrates
+ * communication between all child components.
+ * Acts as the single source of truth for tasks, folders, UI visibility,
+ * and user preferences.
+ */
+
 import { useState } from "react";
 
 import Header from "./components/Header";
@@ -15,11 +23,20 @@ import { VIEWS } from "./constants/views";
 
 import { getDisplayedTasks } from "./utils/taskFilters";
 
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useTasks } from "./hooks/useTasks";
 import { useFolders } from "./hooks/useFolders";
 
 import "./App.css";
 
+/**
+ * @component App
+ * @description Root component of the application. Renders the full UI and
+ * manages all shared state: tasks, folders, active view, open modals,
+ * filters, sort order, and dark mode preference.
+ *
+ * @returns {JSX.Element} The complete application layout.
+ */
 export default function App() {
     const {
         tasks, addTask, updateTask, deleteTask, addFolderToTask,
@@ -28,27 +45,68 @@ export default function App() {
 
     const { folders, addFolder, updateFolder, deleteFolder } = useFolders();
 
+    /** @type {string} The currently rendered view — one of VIEWS.TASKS, VIEWS.FOLDERS, VIEWS.FOLDER_DETAIL */
     const [currentView, setCurrentView] = useState(VIEWS.TASKS);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
-    const [selectedTask, setSelectedTask] = useState(null);
-    const [selectedFolder, setSelectedFolder] = useState(null);
-    const [activeFilter, setActiveFilter] = useState(FILTERS.ACTIVE);
-    const [expandedTaskId, setExpandedTaskId] = useState(null);
-    const [isFolderSelectMode, setIsFolderSelectMode] = useState(false);
-    const [sortBy, setSortBy] = useState(SORT_OPTIONS.DUE_DATE);
-    const [selectedStatuses, setSelectedStatuses] = useState([]);
-    const [selectedFolderIds, setSelectedFolderIds] = useState([]);
-    const [isDark, setIsDark] = useState(false);
 
+    /** @type {boolean} Whether the task creation/edit Modal is open */
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    /** @type {boolean} Whether the FolderModal (create/edit/select) is open */
+    const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
+
+    /** @type {Object|null} The task currently being edited, or null when creating a new one */
+    const [selectedTask, setSelectedTask] = useState(null);
+
+    /** @type {Object|null} The folder currently selected for detail view or editing */
+    const [selectedFolder, setSelectedFolder] = useState(null);
+
+    /** @type {string} The active task filter — either FILTERS.ACTIVE or FILTERS.ALL */
+    const [activeFilter, setActiveFilter] = useState(FILTERS.ACTIVE);
+
+    /** @type {string|null} The ID of the currently expanded TaskCard, or null if none */
+    const [expandedTaskId, setExpandedTaskId] = useState(null);
+
+    /**
+     * @type {boolean} Whether FolderModal is in folder-selection mode.
+     * true  → the user is picking a folder to attach to a task.
+     * false → the user is creating or editing a folder.
+     */
+    const [isFolderSelectMode, setIsFolderSelectMode] = useState(false);
+
+    /** @type {string} The current sort strategy — one of the SORT_OPTIONS values */
+    const [sortBy, setSortBy] = useState(SORT_OPTIONS.DUE_DATE);
+
+    /** @type {string[]} The list of task statuses currently used as filters (empty = no filter) */
+    const [selectedStatuses, setSelectedStatuses] = useState([]);
+
+    /** @type {string[]} The list of folder IDs currently used as filters (empty = no filter) */
+    const [selectedFolderIds, setSelectedFolderIds] = useState([]);
+
+    /** @type {boolean} Dark mode toggle, persisted in localStorage */
+    const [isDark, setIsDark] = useLocalStorage("todoapp_dark_mode", false);
+
+    /**
+     * Toggles the expanded state of a TaskCard.
+     * Collapses the card if it is already expanded, expands it otherwise.
+     * @param {string} id - The ID of the task to toggle.
+     */
     function toggleTask(id) {
         setExpandedTaskId((prev) => prev === id ? null : id);
     }
 
+    /**
+     * Flips the dark mode preference.
+     * The new value is automatically persisted via useLocalStorage.
+     */
     function toggleDarkMode() {
         setIsDark((prev) => !prev);
     }
 
+    /**
+     * Adds or removes a status from the active status filters.
+     * Passing the special value "__clear__" resets all status filters.
+     * @param {string} status - A task status value, or "__clear__" to reset.
+     */
     function toggleStatusFilter(status) {
         if (status === "__clear__") { setSelectedStatuses([]); return; }
         setSelectedStatuses((prev) =>
@@ -56,17 +114,30 @@ export default function App() {
         );
     }
 
+    /**
+     * Adds or removes a folder ID from the active folder filters.
+     * When one or more folder IDs are selected, only tasks belonging
+     * to those folders are displayed.
+     * @param {string} folderId - The ID of the folder to toggle.
+     */
     function toggleFolderFilter(folderId) {
         setSelectedFolderIds((prev) =>
             prev.includes(folderId) ? prev.filter((id) => id !== folderId) : [...prev, folderId]
         );
     }
 
+    /** @type {number} Total number of tasks regardless of status */
     const totalTasks = tasks.length;
+
+    /** @type {number} Number of tasks whose status is not in COMPLETED_STATUS */
     const incompleteTasks = tasks.filter(
         (t) => !COMPLETED_STATUS.includes(t.status)
     ).length;
 
+    /**
+     * @type {Object[]} The filtered and sorted task array to render.
+     * Computed from the full task list using the current filter and sort state.
+     */
     const displayedTasks = getDisplayedTasks(tasks, {
         activeFilter, selectedStatuses, selectedFolderIds,
         sortBy, FILTERS, SORT_OPTIONS, COMPLETED_STATUS,
@@ -74,6 +145,7 @@ export default function App() {
 
     return (
         <div className={`app ${isDark ? "dark" : ""}`}>
+
             <Header
                 totalTasks={totalTasks}
                 incompleteTasks={incompleteTasks}
@@ -107,7 +179,6 @@ export default function App() {
                     Dossiers ({folders.length})
                 </button>
             </div>
-
             {currentView === VIEWS.TASKS && (
                 <>
                     <SortFilterBar

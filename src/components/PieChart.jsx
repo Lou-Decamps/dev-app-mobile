@@ -1,5 +1,16 @@
+/**
+ * @fileoverview Graphical component for task allocation by status.
+ */
 import { STATUS_COLORS } from "../constants/statusColors";
 
+/**
+ * Displays an SVG pie chart showing the distribution of tasks by status,
+ * accompanied by a color-coded key. Each slice corresponds to a status
+ * of TaskStatus. Statuses without tasks are not displayed.
+ * Returns null if no tasks exist.
+ * @param {Object} props
+ * @param {Object[]} props.tasks - All tasks (unfiltered)
+ */
 function pointOnCircle(cx, cy, r, angle) {
     return {
         x: cx + r * Math.cos(angle),

@@ -1,5 +1,26 @@
+/**
+ * @fileoverview Task sorting and filtering bar.
+ */
 import { TaskStatus } from "../constants/taskStatus";
 
+/**
+ * Control bar displaying sorting options (date, name)
+ * and filters (status, folder, current/all).
+ * Each button is a toggle—one click activates, a second click deactivates.
+ *
+ * @param {Object} props
+ * @param {string} props.sortBy - Active sorting option
+ * @param {Function} props.onSortChange - Callback to change the sort order
+ * @param {string[]} props.selectedStatuses - Active filtered statuses
+ * @param {Function} props.onToggleStatus - Callback to enable/disable a status
+ * @param {number[]} props.selectedFolderIds - IDs of filtered folders
+ * @param {Function} props.onToggleFolderFilter - Callback to enable/disable a folder
+ * @param {Object[]} props.folders - List of available folders
+ * @param {string} props.activeFilter - Active global filter (FILTERS.ACTIVE or ALL)
+ * @param {Function} props.onActiveFilterChange - Callback to change the filter global
+ * @param {Object} props.FILTERS - Filter constants
+ * @param {Object} props.SORT_OPTIONS - Sort option constants
+ */
 export default function SortFilterBar({
                                           sortBy,
                                           onSortChange,

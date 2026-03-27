@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Application footer component.
+ */
+
+/**
+ * Footer with creation buttons depending on the active view.
+ * @param {Object} props
+ * @param {string} props.currentView - The currently displayed view
+ * @param {Function} props.onAddTask - Callback to open the task creation modal
+ * @param {Function} props.onAddFolder - Callback to open the folder creation modal
+ */
 export default function Footer({ onAddTask, onAddFolder, currentView }) {
     return (
         <footer className="footer">

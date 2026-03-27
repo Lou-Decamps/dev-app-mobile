@@ -1,3 +1,15 @@
+/**
+ * @fileoverview List of folders with actions.
+ */
+
+/**
+ * Displays a list of all folders with an edit button
+ * and navigation to a folder's details.
+ * @param {Object} props
+ * @param {Object[]} props.folders - Array of folders to display
+ * @param {Function} props.onFolderClick - Callback on click of a folder (opens the details)
+ * @param {Function} props.onFolderEdit - Callback on click of the edit button
+ */
 export default function FolderList({ folders, onFolderClick, onFolderEdit }) {
     if (folders.length === 0) {
         return (

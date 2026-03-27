@@ -1,6 +1,20 @@
+/**
+ * @fileoverview Task creation and editing modal.
+ */
 import { useState } from "react";
 import { TaskStatus } from "../constants/taskStatus";
 
+/**
+ * Modal form for creating or editing a task.
+ * In creation mode (taskToEdit = null), all fields are empty.
+ * In edit mode, the fields are pre-filled with existing values.
+ * @param {Object} props
+ * @param {Function} props.onClose - Callback to close the modal
+ * @param {Function} props.onAdd - Callback to create a new task
+ * @param {Function} props.onUpdate - Callback to update a task
+ * @param {Function} props.onDelete - Callback to delete a task
+ * @param {Object|null} props.taskToEdit - The task to edit, or null in creation mode
+ */
 export default function Modal({ onClose, onAdd, onUpdate, onDelete, taskToEdit }) {
 
     const isEditMode = taskToEdit !== null;

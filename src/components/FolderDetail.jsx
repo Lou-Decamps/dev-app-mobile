@@ -1,3 +1,16 @@
+/**
+ * @fileoverview A folder's detail page.
+ */
+
+/**
+ * Displays the details of a folder: title, color, description, icon, and the list of tasks associated with that folder.
+ *
+ * @param {Object} props
+ * @param {Object} props.folder - The folder to display
+ * @param {Object[]} props.tasks - All tasks (filtered internally by folder)
+ * @param {Function} props.onBack - Callback to return to the folder list
+ * @param {Function} props.onTaskClick - Callback on task click
+ */
 export default function FolderDetail({ folder, tasks, onBack, onTaskClick }) {
     const folderTasks = tasks.filter((t) =>
         t.folders && t.folders.some((f) => f.id === folder.id)

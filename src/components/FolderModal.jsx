@@ -1,7 +1,25 @@
+/**
+ * @fileoverview Multi-mode modal for folders.
+ */
 import { useState } from "react";
 import { FOLDER_COLORS } from "../constants/folderColors";
 import { FOLDER_ICONS } from "../constants/folderIcons";
 
+/**
+ * Modal usable in three modes:
+ * - Create: folderToEdit = null, selectMode = false
+ * - Edit: folderToEdit = a folder, selectMode = false
+ * - Select: selectMode = true (to link a folder to a task)
+ * @param {Object} props
+ * @param {Function} props.onClose - Callback to close the modal
+ * @param {Function} props.onAdd - Callback to create a folder
+ * @param {Function} props.onUpdate - Callback to modify a folder
+ * @param {Function} props.onDelete - Callback to delete a folder
+ * @param {Object|null} props.folderToEdit - The folder to edit, or null
+ * @param {boolean} props.selectMode - If true, displays the selection list
+ * @param {Object[]} props.folders - List of available folders (selection mode)
+ * @param {Function} props.onSelectFolder - Callback when a folder is selected
+ */
 export default function FolderModal({
                                         onClose, onAdd, onUpdate, onDelete,
                                         folderToEdit,

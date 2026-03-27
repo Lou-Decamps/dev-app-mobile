@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Available pictograms for folders.
+ */
+
+/**
+ * @typedef {Object} FolderIcon
+ * @property {string} value - The emoji used as the pictogram
+ * @property {string} label - Text description of the icon
+ */
+
+/**
+ * List of pictograms available to customize a folder.
+ * @type {FolderIcon[]}
+ */
 export const FOLDER_ICONS = [
     { value: "📁", label: "Dossier" },
     { value: "⭐", label: "Favori" },
